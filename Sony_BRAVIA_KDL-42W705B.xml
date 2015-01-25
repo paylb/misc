@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Client name="Sony Bravia 2014 KDL-42W705B">
+  <!-- Author: PayLb. based on original profile from PLex Inc. Sony 2010-2013.
+    Also used:
+    * http://kb.sony-europe.com/SRVS/CGI-BIN/WEBCGI.EXE?St=332,E=0000000000126929163,Key=215,SXI=14,Case=obj(26884) 
+    * Thanks to https://forums.plex.tv/index.php/topic/42523-writing-profiles-for-dlna-devices/ 
+    * Supported by Bravia KDL-42W705B codecs http://pdf.crse.com/manuals/14HE334111/EN/codeclist.html#10 -->
+
+  <!--  Identification: how Plex Media Server recognizes a device, given an incoming HTTP request.-->
+  <Identification>
+    <Header name="X-AV-Client-Info" regex=".*KDL-\d{2}[WR][56879]\d{2}B.*" />
+    <DeviceDescription>
+      <Manufacturer substring="Sony" />
+      <FriendlyName regex="KDL-\d{2}[WR][56879]\d{2}B.*" />
+    </DeviceDescription>
+  </Identification>
+  <!--  Device Description: how Plex Media Server appears to other devices during discovery.-->
+  <DeviceDescription>
+    <ModelName>Windows Media Player Sharing</ModelName>
+    <ModelNumber>3.0</ModelNumber>
+    <ModelUrl>http://www.microsoft.com/</ModelUrl>
+    <Manufacturer>Microsoft Corporation</Manufacturer>
+    <ManufacturerUrl>http://www.microsoft.com/</ManufacturerUrl>
+    <X-DlnaCap />
+    <Sony-AggregationFlags>10</Sony-AggregationFlags>
+  </DeviceDescription>
+  <!-- Settings: configuration options that change the DLNA server's behavior when a device is recognized. -->
+  <Settings>
+    <!--Setting name="TimelineBufferOffset" value="60" /-->
+    <Setting name="AlbumArtPN" value="JPEG_TN" />
+  </Settings>
+  <!--  Transcode Targets: the video and photo formats to which PMS will transcode content not listed in a DirectPlay Profile.-->
+  <TranscodeTargets>
+    <!-- have to comment VideoProfile for transcode because for some reason PMS always choose transcoding regardless of matched DirectPlay profile and Transcode don't work firing 'Playback not available' message on my Bravia.
+          Most of my video media files are playing with Transcode VideoProfile commented.
+      Logs sample when it doesn't commented:
+      Jan 25, 2015 23:11:03:790 [6472] DEBUG - MDE: analyzing media 0
+      Jan 25, 2015 23:11:03:790 [6472] DEBUG - MDE: analyzing video part 133255: mkv/h264/aac/
+      Jan 25, 2015 23:11:03:790 [6472] DEBUG - MDE: selected video transcode profile: http - mpegts/h264/ac3/             <--------------- Why? I don't know :(
+      Jan 25, 2015 23:11:03:791 [6472] DEBUG - [PERF] Slowest insertObjectID in 1.000000 ms.
+      Jan 25, 2015 23:11:03:791 [6472] DEBUG - Returning success with 1 objects
+      Jan 25, 2015 23:11:03:791 [6472] VERBOSE - DIDL:    
+
+    -->
+    <!--VideoProfile container="mp4" codec="h264" audioCodec="ac3"/-->
+    <MusicProfile container="mp3" codec="mp3" />
+    <PhotoProfile container="jpeg" />
+  </TranscodeTargets>
+  <!-- DirectPlay Profiles: the set of video and photo formats that the device understands natively. -->
+  <DirectPlayProfiles>
+    <VideoProfile container="mpeg"    codec="mpeg1video"        audioCodec="mp2" />
+    <VideoProfile container="mpegps"  codec="mpeg2video"        audioCodec="mp2,mp3,pcm,ac3,eac3" />
+    <VideoProfile container="mpegts"  codec="mpeg2video"        audioCodec="eac3,mp2,mp3,aac,ac3" />
+    <VideoProfile container="mpegts"  codec="h264"              audioCodec="eac3,mp2,mp3,aac,ac3" />
+    <VideoProfile container="mp4"     codec="h264,mpeg4"        audioCodec="aac,ac3,eac3,mp2,mp3" />
+    <VideoProfile container="avi"     codec="mpeg4"             audioCodec="mp2,mp3,ac3,eac3" />
+    <VideoProfile container="avi"     codec="mjpeg"             audioCodec="pcm" />
+    <VideoProfile container="asf"     codec="vc1"               audioCodec="wmav9" />
+    <VideoProfile container="mkv"     codec="h264,mpeg4,vp8"    audioCodec="ac3,dts,aac,dca,eac3,mp1,mp2,vorbis" />
+    <VideoProfile container="mov"     codec="h264,mpeg4,mjpeg"  audioCodec="aac,ac3,eac3,mp1,mp2,pcm" />
+    <VideoProfile container="3gpp"    codec="mpeg4,h264"        audioCodec="aac,ac3,mp1,mp2" />
+    <VideoProfile container="webm"    codec="vp8"               audioCodec="vorbis" />
+
+    <MusicProfile container="mp3"     codec="mp3" />
+    <MusicProfile container="wav"     codec="wav" />
+    <MusicProfile container="mp4"     codec="aac,he-aac" />
+    <MusicProfile container="3gpp"    codec="aac" />
+    <MusicProfile container="asf"     codec="wma9" />
+
+    <PhotoProfile container="jpeg" />
+    <PhotoProfile container="raw" />
+    <PhotoProfile container="mpo" /> 
+  </DirectPlayProfiles>
+  <!-- Codec Profiles: configuration options for the video and photo formats that the device understands natively. -->
+  <CodecProfiles>
+    <VideoCodec name="*">
+      <Limitations>
+        <UpperBound name="video.width" value="1920" />
+        <UpperBound name="video.height" value="1080" />
+        <UpperBound name="video.frameRate" value="30" />
+      </Limitations>
+    </VideoCodec>
+    <VideoCodec name="mjpeg">
+      <Limitations>
+        <UpperBound name="video.width" value="1280" />
+        <UpperBound name="video.height" value="720" />
+      </Limitations>
+    </VideoCodec>
+    <VideoCodec name="h264">
+      <Limitations>
+        <UpperBound name="video.frameRate" value="30" />
+        <Match name="video.frameRateMode" value="cfr" />
+        <UpperBound name="video.bitrate" value="20000" />
+        <UpperBound name="video.level" value="41" />
+      </Limitations>
+    </VideoCodec>
+    <VideoCodec name="mpeg2video">
+      <Limitations>
+        <UpperBound name="video.frameRate" value="30" />
+        <UpperBound name="video.bitrate" value="20000" />
+      </Limitations>
+    </VideoCodec>
+
+    <VideoAudioCodec name="ac3">
+      <Limitations>
+        <UpperBound name="audio.channels" value="6" />
+      </Limitations>
+    </VideoAudioCodec>
+    <VideoAudioCodec name="aac">
+      <Limitations>
+        <UpperBound name="audio.channels" value="2" />
+        <NotMatch name="audio.profile" substring="he-aac" isRequired="false" /><!-- No he-aac -->
+      </Limitations>
+    </VideoAudioCodec>
+  </CodecProfiles>
+  <!--  Container Profiles: configuration options for the container formats that the device understands natively.-->
+  <ContainerProfiles>
+    <PhotoContainer name="*">
+      <Limitations>
+        <UpperBound name="media.width" value="1920" />
+        <UpperBound name="media.height" value="1080" />
+      </Limitations>
+    </PhotoContainer>
+  </ContainerProfiles>
+  <!-- DLNA Media Profiles: configuration options for DLNA media profiles. -->
+  <DlnaMediaProfiles>
+    <!-- These are from the Serviio profile. Thanks, Serviio -->
+    <DlnaVideoProfile container="mpegts" codec="h264" audioCodec="ac3,aac,mp3" pn="AVC_TS_HD_24_AC3_T,AVC_TS_HD_50_AC3_T,AVC_TS_HD_60_AC3_T,AVC_TS_HD_EU_T" mimeType="video/vnd.dlna.mpeg-tts">
+      <Limitations>
+        <Match name="video.packetLength" value="192" />
+        <Match name="video.timeStamp" value="1" />
+      </Limitations>
+    </DlnaVideoProfile>
+    <DlnaVideoProfile container="mpegts" codec="h264" audioCodec="ac3,aac,mp3" pn="AVC_TS_HD_24_AC3_ISO,AVC_TS_HD_50_AC3_ISO,AVC_TS_HD_60_AC3_ISO,AVC_TS_HD_EU_ISO" mimeType="video/mpeg">
+      <Limitations>
+        <Match name="video.packetLength" value="188" />
+      </Limitations>
+    </DlnaVideoProfile>
+    <DlnaVideoProfile container="mpegts" codec="h264" audioCodec="ac3,aac,mp3" pn="AVC_TS_HD_24_AC3,AVC_TS_HD_50_AC3,AVC_TS_HD_60_AC3,AVC_TS_HD_EU" mimeType="video/vnd.dlna.mpeg-tts" />
+    <DlnaVideoProfile container="mpegts" codec="mpeg2video" pn="MPEG_TS_SD_EU,MPEG_TS_SD_NA,MPEG_TS_SD_KO" mimeType="video/vnd.dlna.mpeg-tts" />
+    <!-- These are inferred from the earlier PMS Bravia profile -->
+    <DlnaVideoProfile container="mpeg" codec="mpeg1video,mpeg2video" pn="MPEG_PS_NTSC,MPEG_PS_PAL" mimeType="video/mpeg" />
+    <DlnaVideoProfile container="mpeg" codec="mpeg1video,mpeg2video" pn="MPEG_PS_NTSC,MPEG_PS_PAL" mimeType="video/mpeg" />
+    <DlnaVideoProfile container="mpeg" codec="mpeg1video,mpeg2video" pn="MPEG_PS_NTSC,MPEG_PS_PAL" mimeType="video/mpeg" />
+    <DlnaVideoProfile container="avi" pn="" mineType="video/avi" />
+    <!-- TODO - if necessary, remap WMABASE to WMA_BASE and WMAFULL to WMA_FULL-->
+
+    <DlnaAudioProfile container="mp3" codec="mp3" />
+  </DlnaMediaProfiles>
+</Client>

@@ -2,9 +2,10 @@
 <Client name="Sony Bravia 2014 KDL-42W705B">
   <!-- Author: PayLb. based on original profile from PLex Inc. Sony 2010-2013.
     Also used:
-    * http://kb.sony-europe.com/SRVS/CGI-BIN/WEBCGI.EXE?St=332,E=0000000000126929163,Key=215,SXI=14,Case=obj(26884) 
-    * Thanks to https://forums.plex.tv/index.php/topic/42523-writing-profiles-for-dlna-devices/ 
-    * Supported by Bravia KDL-42W705B codecs http://pdf.crse.com/manuals/14HE334111/EN/codeclist.html#10 -->
+    - http://kb.sony-europe.com/SRVS/CGI-BIN/WEBCGI.EXE?St=332,E=0000000000126929163,Key=215,SXI=14,Case=obj(26884) 
+    - Thanks to https://forums.plex.tv/index.php/topic/42523-writing-profiles-for-dlna-devices/ 
+    - Supported by Bravia KDL-42W705B codecs http://pdf.crse.com/manuals/14HE334111/EN/codeclist.html#10
+     -->
 
   <!--  Identification: how Plex Media Server recognizes a device, given an incoming HTTP request.-->
   <Identification>
@@ -31,18 +32,18 @@
   </Settings>
   <!--  Transcode Targets: the video and photo formats to which PMS will transcode content not listed in a DirectPlay Profile.-->
   <TranscodeTargets>
-    <!-- have to comment VideoProfile for transcode because for some reason PMS always choose transcoding regardless of matched DirectPlay profile and Transcode don't work firing 'Playback not available' message on my Bravia.
+    <!-- have to comment VideoProfile for transcode because for some reason PMS always choose transcoding regardless of matched DirectPlay
+     profile and Transcode don't work firing 'Playback not available' message on my Bravia.
           Most of my video media files are playing with Transcode VideoProfile commented.
       Logs sample when it doesn't commented:
       Jan 25, 2015 23:11:03:790 [6472] DEBUG - MDE: analyzing media 0
       Jan 25, 2015 23:11:03:790 [6472] DEBUG - MDE: analyzing video part 133255: mkv/h264/aac/
-      Jan 25, 2015 23:11:03:790 [6472] DEBUG - MDE: selected video transcode profile: http - mpegts/h264/ac3/             <--------------- Why? I don't know :(
+      Jan 25, 2015 23:11:03:790 [6472] DEBUG - MDE: selected video transcode profile: http - mpegts/h264/ac3/              [ Why? I don't know :(]
       Jan 25, 2015 23:11:03:791 [6472] DEBUG - [PERF] Slowest insertObjectID in 1.000000 ms.
       Jan 25, 2015 23:11:03:791 [6472] DEBUG - Returning success with 1 objects
-      Jan 25, 2015 23:11:03:791 [6472] VERBOSE - DIDL:    
-
+      Jan 25, 2015 23:11:03:791 [6472] VERBOSE - DIDL    
     -->
-    <!--VideoProfile container="mp4" codec="h264" audioCodec="ac3"/-->
+    <!--VideoProfile container="mp4" codec="h264" audioCodec="ac3"-->
     <MusicProfile container="mp3" codec="mp3" />
     <PhotoProfile container="jpeg" />
   </TranscodeTargets>
